@@ -1,0 +1,146 @@
+# My adapted/changed Conky
+# 08 Jan 2020
+
+double_buffer yes
+update_interval 2
+background yes
+#alignment middle_middle
+#own_window yes
+
+own_window yes
+own_window_type normal
+own_window_transparent yes
+own_window_colour 000000
+own_window_argb_visual yes
+own_window_argb_value 0
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+
+# own_window_type desktop
+#own_window_hints undecorated,below,skip_taskbar,skip_pager,sticky
+#own_window_type override
+#own_window_argb_visual yes
+#own_window_argb_value 0
+out_to_console no
+#own_window_transparent yes
+#own_window_class conky-semi
+use_xft yes
+xftfont cure:size=10
+
+#use_xft yes
+#xftfont Sansation:size=9
+xftfont Rounded Elegance:size=10
+xftfont Ubuntu-Title:size=10
+xftalpha 0
+update_interval 2
+cpu_avg_samples 2
+net_avg_samples 2
+double_buffer yes
+maximum_width 320
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+stippled_borders 1
+border_width 0
+default_color white
+default_shade_color white
+default_outline_color white
+
+use_spacer left
+no_buffers yes
+uppercase no
+
+color0 white
+color1 green
+color2 white
+color3 1793d0
+color4 007f17
+
+pad_percents 2
+top_name_width 7
+
+alignment middle_middle
+gap_x -400
+gap_y 500
+minimum_size 320 740
+
+lua_load allcombined.lua
+
+own_window_colour 000000
+TEXT
+#-----------------------System information-----------------------
+${offset 5}${font Good Times:size=12}${color Tan1}SYSTEM INFORMATION ${color}${hr 2}${font}
+${font}${color}${offset 9}${execi 3600 cat /etc/mx-version}
+${goto 10} Kernel: $kernel $machine
+${goto 10} ${time %a %d %b %Y - %H:%M}
+#-----------------------CPU-----------------------
+${voffset -10}
+${offset 10}${font Good Times:size=12}${color Tan1}CPU ${color}${hr 2}${font}
+${font}${color}  ${execi 1000 cat /proc/cpuinfo | grep 'model name' | sed -e 's/model name.*: //'| uniq}
+${voffset -12}
+${color lightgrey}  Temperature:${hwmon 2 temp 2}°C${color}
+${voffset -12}
+  Average${goto 65}Load${goto 95}: ${cpu cpu0}% ${goto 140}${color4}${voffset 0}${cpubar cpu0 8,110}${color}${alignr}${offset -5}${lua avg} MHz
+${voffset -12}
+    CPU0${goto 65}Load${goto 95}: ${cpu cpu1}% ${goto 140}${color4}${voffset 0}${cpubar cpu1 8,110}${color}${alignr}${offset -5}${freq 1} MHz
+    CPU1${goto 65}Load${goto 95}: ${cpu cpu2}% ${goto 140}${color4}${voffset 0}${cpubar cpu0 8,110}${color}${alignr}${offset -5}${freq 2} MHz
+    CPU2${goto 65}Load${goto 95}: ${cpu cpu3}% ${goto 140}${color4}${voffset 0}${cpubar cpu0 8,110}${color}${alignr}${offset -5}${freq 3} MHz
+    CPU3${goto 65}Load${goto 95}: ${cpu cpu4}% ${goto 140}${color4}${voffset 0}${cpubar cpu0 8,110}${color}${alignr}${offset -5}${freq 4} MHz
+${voffset -5}${hr 1}${font}
+${color lightgrey}${font Sansation:size=11:bold}${color}${offset 5}PROCESS ${goto 155}CPU ${goto 230}RAM ${alignr}${offset -10}PID
+${voffset -5}${color0}${hr 1}${font}${color}${font monofur:size=11}
+#-------- cpu processes
+${offset 5}${top name 1} ${alignr}${top cpu 1}%      ${top mem_res 1}     ${alignr}${offset -5}${top pid 1}
+${offset 5}${top name 2} ${alignr}${top cpu 2}%      ${top mem_res 2}     ${alignr}${offset -5}${top pid 2}
+${offset 5}${top name 3} ${alignr}${top cpu 3}%      ${top mem_res 3}     ${alignr}${offset -5}${top pid 3}
+${offset 5}${top name 4} ${alignr}${top cpu 4}%      ${top mem_res 4}     ${alignr}${offset -5}${top pid 4}
+${offset 5}${top name 5} ${alignr}${top cpu 5}%      ${top mem_res 5}     ${alignr}${offset -5}${top pid 5}
+${offset 5}${top name 6} ${alignr}${top cpu 6}%      ${top mem_res 6}     ${alignr}${offset -5}${top pid 6}
+${offset 5}${top name 7} ${alignr}${top cpu 7}%      ${top mem_res 7}     ${alignr}${offset -5}${top pid 7}
+${offset 5}${top name 8} ${alignr}${top cpu 8}%      ${top mem_res 8}     ${alignr}${offset -5}${top pid 8}
+${offset 5}${top name 9} ${alignr}${top cpu 9}%      ${top mem_res 9}     ${alignr}${offset -5}${top pid 9}
+${offset 5}${top name 10} ${alignr}${top cpu 10}%      ${top mem_res 10}     ${alignr}${offset -5}${top pid 10}${font}
+#-----------------------Memory Load-----------------------
+${voffset -10}
+${offset 10}${font Good Times:size=12}${color Tan1}MEMORY ${color}${hr 2}${font}
+${color}  RAM Available${color}${alignr}$memmax 
+#${voffset -6}
+${color}  $mem used${alignr}${memperc}% used
+${voffset -10}
+${offset 10}${color4}${membar 10, 305}${color}
+#${lua gradbar {6, 410, "${memperc}", 200, 310, 2, 10, 1, 0xFFFFFF, 0.25, 0x00FF00, 1, 0xFFFF00, 1, 0xFF0000, 1}}
+#-------- mem processes
+${voffset -5}${hr 1}${font}
+${color lightgrey}${font Sansation:size=11:bold}${color}${offset 5}PROCESS ${goto 155}RAM ${goto 230}CPU ${alignr}${offset -10}PID
+${voffset -5}${color0}${hr 1}${font}${color}${font monofur:size=11}
+#${voffset 5}#
+${offset 5}${top_mem name 1} ${alignr}${top_mem mem_res 1}      ${top_mem cpu 1}%     ${alignr}${offset -5}${top_mem pid 1}
+${offset 5}${top_mem name 2} ${alignr}${top_mem mem_res 2}      ${top_mem cpu 2}%     ${alignr}${offset -5}${top_mem pid 2}
+${offset 5}${top_mem name 3} ${alignr}${top_mem mem_res 3}      ${top_mem cpu 3}%     ${alignr}${offset -5}${top_mem pid 3}
+${offset 5}${top_mem name 4} ${alignr}${top_mem mem_res 4}      ${top_mem cpu 4}%     ${alignr}${offset -5}${top_mem pid 4}
+${offset 5}${top_mem name 5} ${alignr}${top_mem mem_res 5}      ${top_mem cpu 5}%     ${alignr}${offset -5}${top_mem pid 5}
+${offset 5}${top_mem name 6} ${alignr}${top_mem mem_res 6}      ${top_mem cpu 6}%     ${alignr}${offset -5}${top_mem pid 6}
+${offset 5}${top_mem name 7} ${alignr}${top_mem mem_res 7}      ${top_mem cpu 7}%     ${alignr}${offset -5}${top_mem pid 7}
+${offset 5}${top_mem name 8} ${alignr}${top_mem mem_res 8}      ${top_mem cpu 8}%     ${alignr}${offset -5}${top_mem pid 8}
+${offset 5}${top_mem name 9} ${alignr}${top_mem mem_res 9}      ${top_mem cpu 9}%     ${alignr}${offset -5}${top_mem pid 9}
+${offset 5}${top_mem name 10} ${alignr}${top_mem mem_res 10}      ${top_mem cpu 10}%     ${alignr}${offset -5}${top_mem pid 10}${font}
+#-----------------------Network-----------------------
+${voffset -10}
+${offset 10}${font Good Times:size=12}${color Tan1}NETWORK ${color}${hr 2}${font}
+${voffset -10}
+#-------- wlan
+${if_up wlan0}${goto 10}Wireless: ${color3} wlan0${color}${goto 160}
+${hr 1}
+${voffset -10}
+${goto 14}${color2}Up: ${color3}${upspeed wlan0} KiB/s${color1}${alignr}${goto 180}${color2}Down:${color1} ${color3}${downspeed wlan0} KiB/s${color0}
+${goto 14}${color2}Sent:${color1} ${color2}${totalup wlan0}${color1}${alignr}${goto 180}${color2}Received:${color}${color2}${totaldown wlan0}
+${goto 14}${upspeedgraph wlan0  25,140 000000 FFBF00}${goto 180}${downspeedgraph wlan0 25,140 000000 00FF00}$
+#-------- eth
+${voffset -10}${endif}${if_up eth0}${goto 10}Ethernet: ${color3} eth0${color}${goto 160}     IP local:${color3}${addr eth0}
+${hr 1}
+${voffset -10}
+${goto 14}${color2}Up: ${color3}${upspeedf eth0} KiB/s${color1}${alignr}${goto 180}${color2}Down:${color1} ${color3}${downspeedf eth0} KiB/s${color0}
+${goto 14}${color2}Sent:${color1} ${color2}${totalup eth0}${color1}${alignr}${goto 180}${color2}Received:${color}${color2}${totaldown eth0}
+${goto 14}${upspeedgraph eth0 25,140 000000 FFBF00 }${goto 180}${downspeedgraph eth0 25,140 000000 00FF00 }$
+${voffset -10}${hr 1}
+${endif}
